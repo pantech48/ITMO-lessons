@@ -27,16 +27,14 @@ def camel_to_snake(name):
 
 	snk_lst = list(name)
 
-	i = 0
+	def decor(n):
+		if n.isupper():
+			n2 = '_' + n
+			return n2
+		return n
 
-	while i < len(snk_lst):			# так и не смог сообразить, как это сделать с помощью map или filter
+	snk_lst_upd = list(map(decor, snk_lst))
+	
+	snk_lst_upd_2 = ''.join(snk_lst_upd).lower()
 
-		if snk_lst[i].isupper():
-			snk_lst.insert(i, '_')
-			i += 1
-		i += 1
-
-	snk_lst.remove(snk_lst[0])
-
-	return (''.join(snk_lst)).lower()
-
+	return snk_lst_upd_2[1:]
