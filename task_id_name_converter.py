@@ -27,14 +27,9 @@ def camel_to_snake(name):
 
 	snk_lst = list(name)
 
-	def decor(n):
-		if n.isupper():
-			n2 = '_' + n
-			return n2
-		return n
-
-	snk_lst_upd = list(map(decor, snk_lst))
+	snk_lst_upd = list(map(lambda x: ("_" + x) if x.isupper() else x, snk_lst))
 	
 	snk_lst_upd_2 = ''.join(snk_lst_upd).lower()
 
 	return snk_lst_upd_2[1:]
+
