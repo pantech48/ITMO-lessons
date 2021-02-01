@@ -11,17 +11,18 @@ def is_palindrome(s):
 
 		low_s = list(s.lower())
 
-		filt_s = tuple(filter(lambda x: x.isnumeric() == True or x.isalpha() == True, low_s))
+		filt_s = tuple(filter(lambda x: x.isalnum(), low_s))
+	
 	else:
 
-
-
-		filt_s = tuple(filter(lambda x: x.isnumeric() == True or x.isalpha() == True, list(str(s))))
+		filt_s = tuple(filter(lambda x: x.isalnum(), list(str(s))))
 	
 
 	if filt_s[::] == filt_s[::-1]:
+		
 		return 1 == 1
+	
 	else:
 		return 1 != 1
 
-print(is_palindrome(123321))
+print(is_palindrome('!a"a#a$a%a&a\'a(a)a*a+a,a-a.a/a:a;aa?a@a[a\\a]a^a_a`a{a|a}a~'))

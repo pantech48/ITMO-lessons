@@ -33,3 +33,4 @@ def camel_to_snake(name):
 
 	return snk_lst_upd_2[1:]
 
+print(camel_to_snake('KgsyXBrurjfJhMpxlmn'))
