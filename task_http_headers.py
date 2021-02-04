@@ -62,7 +62,6 @@ def http_headers_to_json(http, jsn):
 
 
 
-http_headers_to_json('/home/evgeniy/Documents/evgenii-putrin-sergeevich-homework/5da354487d73f26a60cc63e7.txt', 'result.json')
 
 
 
