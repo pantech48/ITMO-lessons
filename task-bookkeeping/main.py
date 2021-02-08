@@ -1,19 +1,19 @@
 from datetime import datetime
 import sqlite3   
 
-with sqlite3.connect('schema.sqlite3', detect_types=sqlite3.PARSE_DECLTYPES) as conn:
+# with sqlite3.connect('schema.sqlite3', detect_types=sqlite3.PARSE_DECLTYPES) as conn:
 
-    sql = '''
-    CREATE TABLE IF NOT EXISTS payment (
-        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-        title VARCHAR(100) NOT NULL,
-        price INTEGER NOT NULL,
-        amount INTEGER NOT NULL DEFAULT 1,
-        date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-    )
-    '''
+#     sql = '''
+#     CREATE TABLE IF NOT EXISTS payment (
+#         id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+#         title VARCHAR(100) NOT NULL,
+#         price INTEGER NOT NULL,
+#         amount INTEGER NOT NULL DEFAULT 1,
+#         date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+#     )
+#     '''
 
-def promt(type_cast=int):
+def display(type_cast=int):
    
     menu = """
 1. Добавить платёж
@@ -31,10 +31,10 @@ def promt(type_cast=int):
     if not value.isnumeric():
         return print('Введите число')
 
-    if not type_cast(value) in list(range(1, len(func_lst))):
+    if not value in func_dict:
         return print('Введите номер соответсвующий команде')
 
-    return func_lst[type_cast(value)]()
+    return function_executor(value)
     
     
     
@@ -66,16 +66,22 @@ def close():
     i = 0
     return print('Закрыть программу')
 
-a_p = add_payment
-e_p = edit_payment
-d_p_a = disp_payment_all
-d_p_p = disp_payment_period
-t_p = top_payment
-s_m = show_menu
-c = close
-func_lst = [None, a_p, e_p, d_p_a, d_p_p, t_p, s_m, c]
+func_dict = {
+    '1': add_payment,
+    '2': edit_payment,
+    '3': disp_payment_all,
+    '4': disp_payment_period,
+    '5': top_payment,
+    '6': show_menu,
+    '7': close,
+}
+
+def function_executor(val):
+    for i in func_dict:
+        if i == val:
+            return func_dict.get(i)()
 
 i = 1
 
 while i:
-    promt()
+    display()
