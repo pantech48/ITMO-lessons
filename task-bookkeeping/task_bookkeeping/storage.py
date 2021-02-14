@@ -56,3 +56,5 @@ def get_payment(conn, payment_id):
 def delete_all_payments(conn):
     """Удаляет все платежи из таблицы"""
     conn.execute(SQL_DELETE_ALL_PAYMENTS)
+
+

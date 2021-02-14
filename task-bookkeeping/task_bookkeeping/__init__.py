@@ -26,9 +26,7 @@ def input_payment():
 
 def input_payment_data(payment=None):
     """Запрашивает данные от пользователя о платеже и возвращает ввод."""
-    # dt = datetime.now()
-    # dt = dt.replace(hour=0, minute=0, second=0, microsecond=0)
-
+    
     payment = dict(payment) if payment else {}
     data = {}
     
@@ -46,7 +44,7 @@ def input_payment_data(payment=None):
     return data
 
 
-def menu_add_payment(): # Done
+def menu_add_payment(): 
     """Добавить платёж"""
     with make_db_connection() as conn:
         data = input_payment_data()
@@ -54,7 +52,7 @@ def menu_add_payment(): # Done
         print(f'Платёж "{data["payment"]}" успешно создан.')
 
 
-def menu_edit_payment(): # Done
+def menu_edit_payment(): 
     """Отредактировать платёж"""
     payment = input_payment()
     
@@ -65,7 +63,7 @@ def menu_edit_payment(): # Done
             print(f'Платёж "{data["payment"]}" успешно отредактирован.')
 
 
-def menu_show_all_payments(): # Done
+def menu_show_all_payments(): 
     """Вывести весь список платежей"""
     
     with make_db_connection() as conn:
@@ -159,6 +157,7 @@ def main():
     with make_db_connection() as conn:
         creation_script = importlib.resources.read_text('task_bookkeeping.resources', 'schema.sql')
         storage.initialize(conn, creation_script)
+        
     
     menu_show_menu()
     
