@@ -1,4 +1,4 @@
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, timedelta, time
 import importlib.resources 
 import sys
 
@@ -28,6 +28,7 @@ def input_payment_data(payment=None):
     """Запрашивает данные от пользователя о платеже и возвращает ввод."""
     
     payment = dict(payment) if payment else {}
+    today_dt = datetime.today()
     data = {}
     
     data['payment'] = prompt('Название', default=payment.get('payment', ''))
@@ -39,7 +40,7 @@ def input_payment_data(payment=None):
     
     data['created'] = input_date(
         'Дата',
-        default=payment.get('created', datetime.now())
+        default=payment.get('created', datetime.combine(today_dt, time()))
     )
     return data
 
@@ -120,10 +121,10 @@ def menu_show_top_payments():
 
 def menu_delete_all_payments():
     """Удалить все платежи"""
-    agreement = ('Yes', 'No')
-    question = prompt('Вы действительно хотите удалить все платежи? [Yes/No]')
+    agreement = ('y', 'Y', 'Yes', 'yes')
+    question = prompt('Вы действительно хотите удалить все платежи? [Y/N]')
 
-    if question is agreement[0]:
+    if question in agreement:
         with make_db_connection() as conn:
             storage.delete_all_payments(conn)
             print('Все платежи успешно удалены.')

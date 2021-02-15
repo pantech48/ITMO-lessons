@@ -3,7 +3,7 @@
 для которых создавать отдельный модуль не рационально
 """
 
-import datetime
+from datetime import date, datetime, timedelta
 import os
 from textwrap import dedent
 
@@ -48,7 +48,7 @@ def input_float(msg='Введите число', default=None):
 
 def input_datetime(msg='Введите дату и время', default=None, fmt='%Y-%m-%d %H:%M:%S'):
 	"""Запрашивает дату и время  пользователя и возвращает ввод"""
-	return prompt(msg, default, type_cast=lambda value: datetime.datetime.strptime(value, fmt))
+	return prompt(msg, default, type_cast=lambda value: datetime.strptime(value, fmt))
 	
 
 def input_date(msg='Введите дату', default=None, fmt='%Y-%m-%d'):
@@ -56,17 +56,12 @@ def input_date(msg='Введите дату', default=None, fmt='%Y-%m-%d'):
 	return prompt(
 		msg, 
 		default, 
-		type_cast=lambda value: datetime.datetime.strptime(value, fmt)
+		type_cast=lambda value: datetime.strptime(value, fmt)
 	)
 
 
 def print_table(headers, iterable):
 	"""Распечатывает таблицу на экран"""
-
-	def datetime_convert_to_date(iterable):
-		for obj in iterable:
-			if isinstance(obj, datetime.datetime):
-				iterable[iterable.index(obj)] = obj.date()
 
 	table = PrettyTable(headers.values())
 	for row in iterable:
@@ -74,8 +69,6 @@ def print_table(headers, iterable):
 
 		for col_name in headers:
 			data.append(row[col_name])
-
-		datetime_convert_to_date(data)
 
 		table.add_row(data)
 	

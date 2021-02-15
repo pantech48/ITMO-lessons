@@ -30,6 +30,7 @@ def create_payment(conn, payment, price, created, amount=1):
 
 def edit_payment(conn, payment_id, payment, price, created, amount=1):
     """Редактирует платёж в БД"""
+    created = datetime.combine(created, time())
     conn.execute(SQL_EDIT_PAYMENT_BY_ID, (payment, price, amount, created, payment_id))
 
 
@@ -40,7 +41,7 @@ def get_top_payments(conn, limit):
 
 def get_payments_per_dates(conn, date_first, date_sec):
     """Возвращает задачи за указанный промежуток."""
-    return conn.execute(SQL_SELECT_ALL_PAYMENTS_FOR_PERIOD, (date_first, date_sec)).fetchall() # доделать
+    return conn.execute(SQL_SELECT_ALL_PAYMENTS_FOR_PERIOD, (date_first, date_sec)).fetchall() 
 
 
 def get_all_payments(conn):
@@ -56,5 +57,4 @@ def get_payment(conn, payment_id):
 def delete_all_payments(conn):
     """Удаляет все платежи из таблицы"""
     conn.execute(SQL_DELETE_ALL_PAYMENTS)
-
 

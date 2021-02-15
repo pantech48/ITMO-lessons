@@ -33,12 +33,13 @@ def make_db_connection():
     """Возвращает объект подключения к БД."""
     sqlite3.register_converter(
         'DATE',
-        lambda v: datetime.strptime(v.decode(), '%Y-%m-%d').date()
+        lambda v: datetime.strptime(v.decode(), '%Y-%m-%d %H:%M:%S').date()
     )
     sqlite3.register_converter(
         'DATETIME',
-        lambda v: datetime.strptime(v.decode(), '%Y-%m-%d %H-%M-%S')
+        lambda v: datetime.strptime(v.decode(), '%Y-%m-%d %H:%M:%S')
     )
+    
     
     db_name = os.path.join(
         user_data_dir, config.get('db', 'db_name')
@@ -48,3 +49,5 @@ def make_db_connection():
     conn.row_factory = sqlite3.Row
     
     return conn
+
+
