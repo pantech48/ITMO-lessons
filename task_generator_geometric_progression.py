@@ -3,7 +3,6 @@ def geometric_progression_generator(b, q):
         raise ArithmeticError('The first term is zero.')
     if not q:
         raise ArithmeticError('The denominator is zero.')
-    while 1:
+    while True:
         yield b
         b *= q
-
