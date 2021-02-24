@@ -34,20 +34,21 @@ class Pizza:
 
     def get_weight(self):
         """Return weight of pizza."""
+        pizza_weight = 0
 
         for ingridient in self._ingridients:
-            self._weight += ingridient.get_weight()
+            pizza_weight += ingridient.get_weight()
 
-        return self._weight/1000
+        return pizza_weight/1000
         
-
     def get_cost(self):
         """Return cost of pizza."""
-        
-        for ingridient in self._ingridients:
-            self._cost += ingridient.get_cost()
+        pizza_cost = 0
 
-        return self._cost
+        for ingridient in self._ingridients:
+            pizza_cost += ingridient.get_cost()
+
+        return pizza_cost
 
     def add_ingredient(self, ingridient):
         """Take object 'ingredient' and add it into pizza."""
@@ -68,16 +69,19 @@ class Order:
 
     def get_cost(self):
         """Return order cost in rubbles."""
-        
-        for pizza in self._orders:
-            self._cost += pizza.get_cost()
+        order_cost = 0
 
-        return self._cost
+        for pizza in self._orders:
+            order_cost += pizza.get_cost()
+
+        return order_cost
     
     def print_receipt(self):
         """Print check on the screen."""
         for pizza in self._orders:
             print(f'{pizza.get_name()} ({pizza.get_weight():.3f}кг) - {pizza.get_cost():.2f}руб')
+
+
 
 
 
