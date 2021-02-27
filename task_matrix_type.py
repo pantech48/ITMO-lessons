@@ -1,14 +1,14 @@
 class MatrixSizeError(ArithmeticError):
     """Matrix size error class."""
     def __init__(self):
-        super().__init__('Incompatible matrix size')
+        super().__init__('Incompatible matrix sizes')
 
 
 class OperandTypeError(TypeError):
     """Operand type error class."""
     def __init__(self, operand, operator):
         super().__init__(
-            f"unsupported operator type(s) for {operator}: '{Matrix.__name__}' and '{type(operand).__name__}'"
+            f"unsupported operandtype(s) for {operator}: '{Matrix.__name__}' and '{type(operand).__name__}'"
         )
 
 
@@ -33,11 +33,11 @@ class Matrix:
         if not isinstance(other, Matrix):
             raise OperandTypeError(other, '+')
 
-        if self.size() != other.size:
+        if self.size() != other.size():
             raise MatrixSizeError
 
-        result = [[self._value[i][j] + other._value[i][j] for j in range(self.size()['columns'])] for i in range(other.size()['rows'])]
-        return Matrix(result)
+        result = ([self._value[i][j] + other._value[i][j] for j in range(self.size()['columns'])] for i in range(other.size()['rows']))
+        return Matrix(list(result))
 
 
     def __sub__(self, other):
@@ -46,11 +46,11 @@ class Matrix:
         if not isinstance(other, Matrix):
             raise OperandTypeError(other, '-')
 
-        if self.size() != other.size:
+        if self.size() != other.size():
             raise MatrixSizeError
 
-        result = [[self._value[i][j] - other._value[i][j] for j in range(self.size()['columns'])] for i in range(other.size()['rows'])]
-        return Matrix(result)
+        result = ([self._value[i][j] - other._value[i][j] for j in range(self.size()['columns'])] for i in range(other.size()['rows']))
+        return Matrix(list(result))
 
     def __mul__(self, other):
         """Multiplication operator."""
@@ -63,11 +63,11 @@ class Matrix:
             if len(self.get_transpose_matrix()._value) != len(other._value):
                 raise MatrixSizeError()
 
-            result = [[sum(a*b for a,b in zip(self_raw,other_col)) for other_col in zip(*other._value)] for self_raw in self._value]
-            return Matrix(result)
+            result = ([sum(a*b for a,b in zip(self_raw,other_col)) for other_col in zip(*other._value)] for self_raw in self._value)
+            return Matrix(list(result))
         
-        result = [[elem*other for elem in row] for row in self._value]
-        return Matrix(result)
+        result = ([elem*other for elem in row] for row in self._value)
+        return Matrix(list(result))
 
     def get_transpose_matrix(self):
         """Transpose operator."""
@@ -76,20 +76,5 @@ class Matrix:
         
     def tolist(self):
         """Return matrix as 2D list."""
-        return self._value
-
-a = Matrix([
-    [1, -1],
-    [2, 0],
-    
-])
-
-b = Matrix([
-    [1, -1],
-    [2, 0],
-    
-])
-
-c = a * 3
-print(c.tolist() is c)
+        return self._value.copy()
 
