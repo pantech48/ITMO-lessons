@@ -58,7 +58,7 @@ class Money:
         if not isinstance(other, Money):
             raise OperandTypeError(other, '-')
 
-        sub = self._int_curency + other._int_curency
+        sub = self._int_curency - other._int_curency
         result = Money(0, sub)
         return Money(result.get_whole(), result.get_fraction())
 
@@ -123,11 +123,3 @@ class Money:
 
 
 
-money1 = Money(593, 72)
-
-money2 = Money(0, 455)
-
-a = money1 - money2
-
-print(money1 != money2)
-print(a)
