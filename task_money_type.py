@@ -3,7 +3,7 @@ class OperandTypeError(TypeError):
     def __init__(self, operand, operator=None):
         if operator is not None:
             super().__init__(
-                f"unsupported operator type(s) for {operator}: '{Money.__name__}' and '{type(operand).__name__}'"
+                f"unsupported operand type(s) for {operator}: '{Money.__name__}' and '{type(operand).__name__}'"
             )
         else:
             super().__init__(
@@ -127,7 +127,7 @@ money1 = Money(593, 72)
 
 money2 = Money(0, 455)
 
-a = money1 / 74
+a = money1 - money2
 
 print(money1 != money2)
 print(a)
