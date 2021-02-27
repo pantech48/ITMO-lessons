@@ -8,7 +8,7 @@ class OperandTypeError(TypeError):
     """Operand type error class."""
     def __init__(self, operand, operator):
         super().__init__(
-            f"unsupported operandtype(s) for {operator}: '{Matrix.__name__}' and '{type(operand).__name__}'"
+            f"unsupported operand type(s) for {operator}: '{Matrix.__name__}' and '{type(operand).__name__}'"
         )
 
 
