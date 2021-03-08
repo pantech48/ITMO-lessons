@@ -42,12 +42,10 @@ class DateTimeValidator(Validator):
         fit_frmt = ''
             
         for frmt in self.date_formats:
-            print(frmt)
             frmt_signs = (i for i in frmt if not (i.isalpha() or i == '%'))      
             if tuple(date_signs) == tuple(frmt_signs):
                 fit_frmt = frmt   
 
-        print(fit_frmt, date_signs)
         try:
                 datetime.strptime(value, fit_frmt)
                 return True
