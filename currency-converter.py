@@ -2,7 +2,7 @@ import json
 import sys
 from urllib.request import urlopen
 
-from PyQt5.QtCore import QObject, Qt, pyqtSignal
+from PyQt5.QtCore import QObject, Qt, pyqtSignal, pyqtSlot
 from PyQt5.QtWidgets import (
     QApplication, QMainWindow, QWidget,
     QLabel, QDoubleSpinBox, QPushButton, QComboBox,
@@ -44,9 +44,6 @@ class Course(QObject):
         return self.isoCodes
     
 
-
-
-
 class MainWindow(QMainWindow):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -70,8 +67,9 @@ class MainWindow(QMainWindow):
 
         self.convertBtn = QPushButton('Перевести', self)
         self.convertBtn.setCheckable(True)
+        self.convertBtn.setEnabled(False)
         self.clearBtn = QPushButton('Очистить', self)
-
+        
         self.currencyBtn = QComboBox(self)
         self.currencyBtn.setEditable(True)
         self.currencyBtn.addItems(self.__course.getValutes())
@@ -80,6 +78,8 @@ class MainWindow(QMainWindow):
         self.convertBtn.clicked.connect(self.convertIntoRub)
         self.convertBtn.clicked.connect(self.convertIntoAnotherCurrency)
         self.clearBtn.clicked.connect(self.clear)
+        self.srcAmount.valueChanged.connect(self.convertBtnStatusCheck)
+        self.resultAmount.valueChanged.connect(self.convertBtnStatusCheck)
        
     def initLayouts(self):
         self.w = QWidget(self)
@@ -119,24 +119,31 @@ class MainWindow(QMainWindow):
             self.resultAmount.setValue(0)
             self.srcAmount.setValue(0)
 
-    def convertBtnStatus(self):
+    def convertBtnStatusCheck(self):
         value_1 = self.srcAmount.value()
         value_2 = self.resultAmount.value()
 
-        if (value_1 and value_2) or not (value_1 and value_2):
+        if (value_1 and value_2) or (not value_1 and not value_2):
             self.convertBtn.setEnabled(False)
-            #return False
+            return False
         else:
             self.convertBtn.setEnabled(True)
-            #return True
+            return True
 
     def keyPressEvent(self, e):
         if e.key() == Qt.Key_F5:
             self.close()
 
         if e.key() == Qt.Key_Return:
-            self.convertIntoRub()
-            self.convertIntoAnotherCurrency()
+            if self.convertBtnStatusCheck():
+                self.convertIntoRub()
+                self.convertIntoAnotherCurrency()
+
+    def convertBtnDisabled(self):
+        self.convertBtn.setEnabled(False)
+
+    def convertBtnEnabled(self):
+        self.convertBtn.setEnabled(True)
 
 
 if __name__ == '__main__':
